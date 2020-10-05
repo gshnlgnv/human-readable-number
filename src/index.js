@@ -68,35 +68,35 @@ module.exports = function toReadable (number) {
         }
     };
 
-    if (number < 10 && number !== 0) {
-        let str = number.toString();
-        return oneLengthStr(str);
+    let str = number.toString();
 
-    } else if (number >= 10 && number <= 90 && number % 10 === 0 && number !== 0) {
-        let str = number.toString().split("", 1).join("");
-        return decimalNumberFunc(str);
-
-    } else if (number < 20 && number > 10 && number !== 0) {
-        let str = number.toString();
-        return from10to19str(str);
-
-    } else if (number === 0) {
+    if (number === 0) {
         return "zero";
+    } else {
+        if (number < 10 ) {
+            return oneLengthStr(str);
 
-    } else if (number < 100 && number !== 0) {
-        let str = number.toString();
-        let a = str.slice(0, 1);
-        let b = str.slice(1, 2);
-        return `${decimalNumberFunc(a)} ${oneLengthStr(b)}`
+        } else if (number >= 10 && number <= 90 && number % 10 === 0) {
+            str = number.toString().split("", 1).join("");
+            return decimalNumberFunc(str);
 
-    } else if (number > 100 && number !== 0 && number % 100 !== 0) {
-        let str = number.toString();
-        let a = str.slice(0, 1);
-        let b = Number(str.slice(1, 3));
-        return `${oneLengthStr(a)} hundred ${toReadable(b)}`
+        } else if (number < 20 && number > 10 ) {
+            let str = number.toString();
+            return from10to19str(str);
 
-    } else if (number % 100 === 0 && number !== 0) {
-        let str = number.toString().slice(0, 1);
-        return `${oneLengthStr(str)} hundred`;
+        } else if (number < 100 ) {
+            let a = str.slice(0, 1);
+            let b = str.slice(1, 2);
+            return `${decimalNumberFunc(a)} ${oneLengthStr(b)}`
+
+        } else if (number > 100 && number % 100 !== 0) {
+            let a = str.slice(0, 1);
+            let b = Number(str.slice(1, 3));
+            return `${oneLengthStr(a)} hundred ${toReadable(b)}`
+
+        } else if (number % 100 === 0 ) {
+            let str = number.toString().slice(0, 1);
+            return `${oneLengthStr(str)} hundred`;
+        }
     }
 };
